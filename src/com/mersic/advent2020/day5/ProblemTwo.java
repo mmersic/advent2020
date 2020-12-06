@@ -3,52 +3,20 @@ package com.mersic.advent2020.day5;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProblemTwo {
-    public static int toInt(String s, char high) {
-        int v = 0;
-        int len = s.length()-1;
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(len-i) == high) {
-                v += (Math.pow(2, i));
-            }
-        }
-        return v;
-    }
-
-
-    public static int seatValue(String seat) {
-
-        String row = seat.substring(0,7);
-        String column = seat.substring(7);
-
-        int r = toInt(row, 'B');
-        int c = toInt(column, 'R');
-
-        return (r*8+c);
-    }
 
     public static void main(String args[]) throws Exception {
-        String filename = "./resources/day5.1.input";
+        record rcpair(int r, int c) {};
+        //correct answer is 569
+        int[] prev = new int[] {-1};
+        System.out.println("ans: " + (Files.readAllLines(Path.of("./resources/day5.1.input")).stream().map(seat -> new rcpair(Integer.parseInt(seat.substring(0,7).chars().boxed().map(s->s=='B'? "1" : "0").collect(Collectors.joining()),2), Integer.parseInt(seat.substring(7).chars().boxed().map(s->s=='R'? "1" : "0").collect(Collectors.joining()),2))).map(s->s.r*8+s.c).sorted().dropWhile(s -> (s-prev[0] != 2 && (prev[0]=s)==s)).findFirst().get()-1));
 
-        List<String> seats = Files.readAllLines(Path.of(filename));
-
-        List<Integer> seatIds = new ArrayList<>();
-        for (String seat : seats) {
-            int seatValue = seatValue(seat);
-            seatIds.add(seatValue);
-        }
-        Collections.sort(seatIds);
-
-        for (int i = 1; i < seatIds.size()-1; i++) {
-            if (seatIds.get(i)-seatIds.get(i-1) == 2) {
-                //correct answer is 569
-                System.out.println("seatId: " + (seatIds.get(i-1)+1));
-                break;
-            }
-        }
-
+//Alternative soln for both parts:
+//        List<Integer> list = Files.readAllLines(Path.of("./resources/day5.1.input")).stream().map(seat -> new rcpair(Integer.parseInt(seat.substring(0,7).chars().boxed().map(s->s=='B'? "1" : "0").collect(Collectors.joining()),2), Integer.parseInt(seat.substring(7).chars().boxed().map(s->s=='R'? "1" : "0").collect(Collectors.joining()),2))).map(s->s.r*8+s.c).sorted().collect(Collectors.toCollection(ArrayList::new));
+//        System.out.println("part1: " + list.get(list.size()-1));
+//        System.out.println("part2: " + (list.stream().dropWhile(s -> (s-prev[0] != 2 && (prev[0]=s)==s)).findFirst().get()-1));
     }
 }
