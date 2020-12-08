@@ -48,7 +48,7 @@ public class ProblemOne {
             }
         }
 
-        //ans; ex: 4, full: 233
+        //ans;q ex: 4, full: 233
         System.out.println("ans: " + count);
     }
 

@@ -35,9 +35,9 @@ public class ProblemTwo {
             }
             G.put(color, edges);
         }
-
+        long start = System.currentTimeMillis();
         int part2 = countBags(G, "shiny_gold")-1;
         //ans; ex: 32, full: 421550
-        System.out.println("part2: " + part2);
+        System.out.println("part2: " + part2 + " time: " + (System.currentTimeMillis()-start));
     }
 }
