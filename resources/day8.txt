@@ -61,7 +61,7 @@ jmp -3
 acc -99
 acc +1
 jmp -4
-acc +6∑
+acc +6
 If you change the first instruction from nop +0 to jmp +0, it would create a single-instruction infinite loop, never leaving that instruction. If you change almost any of the jmp instructions, the program will still eventually find another jmp instruction and loop forever.
 
 However, if you change the second-to-last instruction (from jmp -4 to nop -4), the program terminates! The instructions are visited in this order:
