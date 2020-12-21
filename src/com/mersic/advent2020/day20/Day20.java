@@ -2,12 +2,9 @@ package com.mersic.advent2020.day20;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.SecureRandom;
 import java.util.*;
 
 public class Day20 {
-
-    private static Random R = new SecureRandom();
 
     private static class Image {
         int id;
@@ -57,40 +54,6 @@ public class Day20 {
                 }
             }
         }
-    }
-
-    public static void print(Image img) {
-        System.out.println("id: " + img.id + " r: " + img.rotation + " f: " + img.flip);
-        for (int i = 0; i < img.image.length; i++) {
-            for (int j = 0; j < img.image[0].length; j++) {
-                System.out.print(img.transform[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-    public static void printDebug(Image img) {
-        int r = img.rotation;
-        int f = img.flip;
-        img.flip = 0;
-        img.rotation = 0;
-        System.out.println("id: " + img.id + " r: " + img.rotation + " f: " + img.flip);
-        print(img);
-        if (f > 0) {
-            img.flip = f;
-            System.out.println("id: " + img.id + " r: " + img.rotation + " f: " + img.flip);
-            img.transform();
-            print(img);
-        }
-
-        for (int rr = 1; rr <= r; rr++) {
-            img.rotation = rr;
-            System.out.println("id: " + img.id + " r: " + img.rotation + " f: " + img.flip);
-            img.transform();
-            print(img);
-        }
-        System.out.println();
     }
 
     public static boolean fit(Image[][] I, Image img, int x, int y) {
@@ -263,6 +226,28 @@ public class Day20 {
         System.out.println("part2 took another: " + (System.currentTimeMillis()-finishTime) + "ms.");
     }
 
+    private static int monsterCount(Image bigImage, Image seaMonster) {
+        int monsters = 0;
+        nextY: for (int y = 0; y < bigImage.transform.length; y++) {
+            nextX: for (int x = 0; x < bigImage.transform[0].length; x++) {
+                for (int yy = 0; yy < seaMonster.image.length; yy++) {
+                    for (int xx = 0; xx < seaMonster.image[0].length; xx++) {
+                        try {
+                            if (seaMonster.image[yy][xx] == '#' && bigImage.transform[y + yy][x + xx] != '#') {
+                                continue nextX;
+                            }
+                        } catch (IndexOutOfBoundsException e) {
+                            continue nextY;
+                        }
+                    }
+                }
+                monsters++;
+            }
+        }
+        return monsters;
+    }
+
+    /** For debugging, not part of generating the soln */
     private static void markMonsters(Image bigImage, Image seaMonster) {
         nextY: for (int y = 0; y < bigImage.transform.length; y++) {
             nextX: for (int x = 0; x < bigImage.transform[0].length; x++) {
@@ -293,26 +278,39 @@ public class Day20 {
         }
     }
 
-    private static int monsterCount(Image bigImage, Image seaMonster) {
-        int monsters = 0;
-        nextY: for (int y = 0; y < bigImage.transform.length; y++) {
-            nextX: for (int x = 0; x < bigImage.transform[0].length; x++) {
-                for (int yy = 0; yy < seaMonster.image.length; yy++) {
-                    for (int xx = 0; xx < seaMonster.image[0].length; xx++) {
-                        try {
-                            if (seaMonster.image[yy][xx] == '#' && bigImage.transform[y + yy][x + xx] != '#') {
-                                continue nextX;
-                            }
-                        } catch (IndexOutOfBoundsException e) {
-                            continue nextY;
-                        }
-                    }
-                }
-                monsters++;
+    /** For debugging, not part of generating the soln */
+    public static void print(Image img) {
+        System.out.println("id: " + img.id + " r: " + img.rotation + " f: " + img.flip);
+        for (int i = 0; i < img.image.length; i++) {
+            for (int j = 0; j < img.image[0].length; j++) {
+                System.out.print(img.transform[i][j]);
             }
+            System.out.println();
         }
-        return monsters;
+        System.out.println();
     }
 
+    /** For debugging, not part of generating the soln */
+    public static void printDebug(Image img) {
+        int r = img.rotation;
+        int f = img.flip;
+        img.flip = 0;
+        img.rotation = 0;
+        System.out.println("id: " + img.id + " r: " + img.rotation + " f: " + img.flip);
+        print(img);
+        if (f > 0) {
+            img.flip = f;
+            System.out.println("id: " + img.id + " r: " + img.rotation + " f: " + img.flip);
+            img.transform();
+            print(img);
+        }
 
+        for (int rr = 1; rr <= r; rr++) {
+            img.rotation = rr;
+            System.out.println("id: " + img.id + " r: " + img.rotation + " f: " + img.flip);
+            img.transform();
+            print(img);
+        }
+        System.out.println();
+    }    
 }
