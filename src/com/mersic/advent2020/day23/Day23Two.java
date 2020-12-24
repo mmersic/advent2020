@@ -120,7 +120,7 @@ public class Day23Two {
     public static void main(String args[]) throws Exception {
         //example input
         //int[] input = new int[] { 3,8,9,1,2,5,4,6,7 };
-        
+        long startTime = System.currentTimeMillis();
         int [] input = new int[] { 5,8,3,9,7,6,2,4,1 };
 
         Node currentCup = setup(input);
@@ -146,5 +146,7 @@ public class Day23Two {
         //ex:    149245887792
         //part2: 442938711161
         System.out.println("part2: " + result);
+        long finishTime = System.currentTimeMillis();
+        System.out.println("runtime: " + (finishTime-startTime));
     }    
 }
