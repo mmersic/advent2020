@@ -1,8 +1,5 @@
 package com.mersic.advent2020.day25;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 public class Day25 {
     
     static long findLoop(long pub, long r, long s) {
@@ -28,6 +25,8 @@ public class Day25 {
     }
     
     public static void main(String args[]) throws Exception {
+        long startTime = System.currentTimeMillis();
+        
         long pub1 = 12232269l;
         long pub2 = 19452773l;
         long    r = 20201227;
@@ -38,11 +37,12 @@ public class Day25 {
         
         long enc1  = findEnc(pub1, loop2, r);
         long enc2  = findEnc(pub2, loop1, r);
+        long finishTime = System.currentTimeMillis();
         
         System.out.println("loop1: " + loop1 + " loop2: " + loop2);
         
         //354320
-        System.out.println("enc1: " + enc1 + " enc2: " + enc2);
+        System.out.println("enc1: " + enc1 + " enc2: " + enc2 + " in time: " + (finishTime-startTime));
         
     }
 }
