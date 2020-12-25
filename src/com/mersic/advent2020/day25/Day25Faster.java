@@ -1,5 +1,6 @@
 package com.mersic.advent2020.day25;
 
+//Adapted from u/ramuuns-u soln.
 public class Day25Faster {
     public static void main(String args[]) throws Exception {
         long startTime = System.currentTimeMillis();

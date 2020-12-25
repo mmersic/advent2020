@@ -2,6 +2,7 @@ package com.mersic.advent2020.day25;
 
 import java.math.BigInteger;
 
+// Adapted from linl33's soln: https://github.com/linl33/adventofcode/blob/year2020/year2020/src/main/java/dev/linl33/adventofcode/year2020/Day25.java
 public class Day25Fastest {
     final static long pub1 = 12232269l;
     final static long pub2 = 19452773l;
